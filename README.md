@@ -12,7 +12,7 @@ Interactive dashboards for insights
 1️⃣ Clone the repository:
 
 bash
-git clone https://github.com/YOUR-USERNAME/ecommerce_dw.git
+git clone https://github.com/Sai123444/ecommerce_dw.git
 cd ecommerce_dw
 
 2️⃣ Install dependencies:
