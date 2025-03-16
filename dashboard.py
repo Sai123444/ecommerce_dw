@@ -4,14 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Database connection details
-DB_CONN = {
-    "host": "localhost",
-    "database": "ecommerce_dw",
-    "user": "airflow",
-    "password": "airflow",
-    "port": 5432,
-}
+# Load database credentials from secrets.toml
+DB_CONN = st.secrets["database"]
 
 # Function to fetch data from PostgreSQL
 def fetch_data(query):
@@ -53,4 +47,3 @@ ax.set_ylabel("Total Sales")
 st.pyplot(fig)
 
 st.write("📌 **Dashboard Created using Streamlit**")
-
