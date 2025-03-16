@@ -1,0 +1,8 @@
+# Ignore system & temporary files
+*.log
+*.dat
+*.ini
+*.DS_Store
+logs/
+AppData/
+*.tmp
