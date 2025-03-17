@@ -4,12 +4,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load database credentials from secrets.toml
+# Load database credentials from Streamlit secrets
 DB_CONN = st.secrets["database"]
 
 # Function to fetch data from PostgreSQL
 def fetch_data(query):
-    conn = psycopg2.connect(**DB_CONN)
+    conn = psycopg2.connect(
+        host=DB_CONN["host"],
+        database=DB_CONN["database"],
+        user=DB_CONN["user"],
+        password=DB_CONN["password"],
+        port=DB_CONN["port"]
+    )
     df = pd.read_sql(query, conn)
     conn.close()
     return df
@@ -30,20 +36,3 @@ df_revenue = fetch_data(query)
 fig, ax = plt.subplots()
 sns.barplot(x="total_revenue", y="product_name", data=df_revenue, ax=ax)
 st.pyplot(fig)
-
-# Sales Trend
-st.subheader("📈 Monthly Sales Trend")
-query = """
-    SELECT DATE_TRUNC('month', sale_date) AS sale_month, SUM(total_price) AS monthly_sales
-    FROM fact_sales
-    GROUP BY sale_month
-    ORDER BY sale_month;
-"""
-df_trend = fetch_data(query)
-fig, ax = plt.subplots()
-ax.plot(df_trend["sale_month"], df_trend["monthly_sales"], marker="o")
-ax.set_xlabel("Month")
-ax.set_ylabel("Total Sales")
-st.pyplot(fig)
-
-st.write("📌 **Dashboard Created using Streamlit**")
